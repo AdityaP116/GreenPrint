@@ -38,7 +38,7 @@ app.use('/api/users', userRoutes);
 app.use(express.static(path.join(__dirname, '../../frontend/dist')));
 
 // Route all non-API requests to the React frontend (for client-side routing)
-app.get('*', (req, res) => {
+app.use((req, res, next) => {
   if (req.path.startsWith('/api/')) {
     return res.status(404).json({ error: 'API route not found' });
   }
