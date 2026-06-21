@@ -7,9 +7,9 @@ export default function Navbar() {
   const { currentUser, logout } = useAuth();
 
   return (
-    <nav style={{ background: 'var(--surface-container-lowest)', padding: '16px 64px', borderBottom: '1px solid var(--outline-variant)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+    <nav aria-label="Main Navigation" style={{ background: 'var(--surface-container-lowest)', padding: '16px 64px', borderBottom: '1px solid var(--outline-variant)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '32px' }}>
-        <Link to="/" className="h2-text text-primary" style={{ textDecoration: 'none' }}>GreenPrint</Link>
+        <Link to="/" aria-label="GreenPrint Home" className="h2-text text-primary" style={{ textDecoration: 'none' }}>GreenPrint</Link>
         {currentUser && (
           <div style={{ display: 'flex', gap: '16px' }}>
             <Link to="/" className="label" style={{ color: 'var(--on-surface)', textDecoration: 'none' }}>Dashboard</Link>

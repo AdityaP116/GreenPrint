@@ -22,17 +22,18 @@ function App() {
       <AuthProvider>
         <div className="app-container">
           <Navbar />
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/onboarding" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
-            <Route path="/roadmap" element={<PrivateRoute><Roadmap /></PrivateRoute>} />
-            <Route path="/progress" element={<PrivateRoute><Progress /></PrivateRoute>} />
-            <Route path="/achievements" element={<PrivateRoute><Achievements /></PrivateRoute>} />
-            <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
-            <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
-
-          </Routes>
+          <main id="main-content">
+            <Routes>
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/onboarding" element={<PrivateRoute><Onboarding /></PrivateRoute>} />
+              <Route path="/roadmap" element={<PrivateRoute><Roadmap /></PrivateRoute>} />
+              <Route path="/progress" element={<PrivateRoute><Progress /></PrivateRoute>} />
+              <Route path="/achievements" element={<PrivateRoute><Achievements /></PrivateRoute>} />
+              <Route path="/reports" element={<PrivateRoute><Reports /></PrivateRoute>} />
+              <Route path="/" element={<PrivateRoute><Dashboard /></PrivateRoute>} />
+            </Routes>
+          </main>
         </div>
       </AuthProvider>
     </Router>
