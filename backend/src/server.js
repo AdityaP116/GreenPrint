@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const rateLimit = require('express-rate-limit');
+const path = require('path');
 require('dotenv').config();
 
 const app = express();
@@ -32,6 +33,17 @@ const userRoutes = require('./routes/userRoutes');
 
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/users', userRoutes);
+
+// Serve static frontend files from the dist folder
+app.use(express.static(path.join(__dirname, '../../frontend/dist')));
+
+// Route all non-API requests to the React frontend (for client-side routing)
+app.get('*', (req, res) => {
+  if (req.path.startsWith('/api/')) {
+    return res.status(404).json({ error: 'API route not found' });
+  }
+  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+});
 
 // Global error handler
 app.use((err, req, res, next) => {
