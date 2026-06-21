@@ -9,7 +9,7 @@ if (!admin.apps.length) {
   try {
     admin.initializeApp({
       credential: admin.credential.applicationDefault(),
-      // projectId: process.env.FIREBASE_PROJECT_ID || 'greenprint-hackathon'
+      projectId: process.env.FIREBASE_PROJECT_ID || 'greenprint-1832f'
     });
     console.log('Firebase Admin initialized');
   } catch (error) {
@@ -17,7 +17,16 @@ if (!admin.apps.length) {
   }
 }
 
-const db = admin.firestore ? admin.firestore() : null;
-const auth = admin.auth ? admin.auth() : null;
+let db = null;
+let auth = null;
+
+if (admin.apps.length > 0) {
+  try {
+    db = admin.firestore();
+    auth = admin.auth();
+  } catch (error) {
+    console.warn('Failed to initialize Firestore or Auth:', error.message);
+  }
+}
 
 module.exports = { admin, db, auth };
