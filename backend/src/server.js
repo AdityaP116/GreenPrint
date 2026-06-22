@@ -35,10 +35,26 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/users', userRoutes);
 
-// Catch-all for undefined API routes
-app.use((req, res, next) => {
-  res.status(404).json({ error: 'API route not found' });
-});
+const fs = require('fs');
+
+const frontendDistPath = path.join(__dirname, '../../frontend/dist');
+if (fs.existsSync(frontendDistPath)) {
+  // Serve static frontend files from the dist folder if it exists (local dev/monorepo deployment)
+  app.use(express.static(frontendDistPath));
+
+  // Route all non-API requests to the React frontend (for client-side routing)
+  app.use((req, res, next) => {
+    if (req.path.startsWith('/api/')) {
+      return res.status(404).json({ error: 'API route not found' });
+    }
+    res.sendFile(path.join(frontendDistPath, 'index.html'));
+  });
+} else {
+  // Catch-all for undefined API routes (Cloud Run mode, frontend hosted separately)
+  app.use((req, res, next) => {
+    res.status(404).json({ error: 'API route not found' });
+  });
+}
 
 // Global error handler
 app.use((err, req, res, next) => {
