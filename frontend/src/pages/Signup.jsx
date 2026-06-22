@@ -28,8 +28,8 @@ export default function Signup() {
       // Wait, we need to create the user profile on the backend, 
       // but for now, just navigate to onboarding
       navigate('/onboarding');
-    } catch {
-      setError('Failed to create an account');
+    } catch (err) {
+      setError('Failed to create an account: ' + (err.message || ''));
     }
     setLoading(false);
   }
