@@ -16,7 +16,10 @@ const limiter = rateLimit({
 });
 
 // Security and utility middlewares
-app.use(helmet());
+// Disable strict CSP locally to allow Firebase and Google Analytics connections from the served React app
+app.use(helmet({
+  contentSecurityPolicy: false,
+}));
 const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:5173'];
 app.use(cors({ origin: allowedOrigins })); 
 app.use(express.json({ limit: '1mb' })); // Limit request size to prevent DOS
