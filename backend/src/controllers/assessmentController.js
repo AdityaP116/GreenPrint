@@ -17,7 +17,12 @@ exports.submitAssessment = async (req, res) => {
     const insights = generateAIInsights(footprint);
 
     // 3. Save to Firestore (mocking for local dev without service account if needed)
-    if (db) {
+    if (!db) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('Firestore is not initialized in production');
+      }
+      console.warn('Firestore not initialized, skipping database write.');
+    } else {
       const assessmentRef = db.collection('assessments').doc();
       const footprintRef = db.collection('footprints').doc();
       const userRef = db.collection('users').doc(uid);
@@ -47,8 +52,6 @@ exports.submitAssessment = async (req, res) => {
           lastUpdated: timestamp
         }, { merge: true });
       });
-    } else {
-      console.warn('Firestore not initialized, skipping database write.');
     }
 
     res.status(200).json({ 
@@ -68,6 +71,9 @@ exports.getLatestAssessment = async (req, res) => {
     const uid = req.user.uid;
 
     if (!db) {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('Firestore is not initialized in production');
+      }
       return res.status(200).json({ data: null, message: 'Firestore not initialized' });
     }
 

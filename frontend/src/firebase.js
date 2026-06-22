@@ -7,13 +7,13 @@ import { getAnalytics } from "firebase/analytics";
 // Replace these with actual values for a real deployment.
 // Using dummy values for now to allow the app to compile.
 const firebaseConfig = {
-  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "dummy_api_key",
-  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "greenprint.firebaseapp.com",
-  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "greenprint-hackathon",
-  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "greenprint.appspot.com",
-  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "123456789",
-  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:123456789:web:abcdef",
-  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-dummy"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY || "AIzaSyAwFWPPdDb9oddThYp3jzpmsisCVEcZFC4",
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN || "greenprint-b6498.firebaseapp.com",
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID || "greenprint-b6498",
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET || "greenprint-b6498.firebasestorage.app",
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID || "84056980772",
+  appId: import.meta.env.VITE_FIREBASE_APP_ID || "1:84056980772:web:1003c9da1673fa72fec7b1",
+  measurementId: import.meta.env.VITE_FIREBASE_MEASUREMENT_ID || "G-LT22Y46CE1"
 };
 
 // Initialize Firebase

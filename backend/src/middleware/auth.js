@@ -7,7 +7,11 @@ const verifyToken = async (req, res, next) => {
     return res.status(401).json({ error: 'Unauthorized', message: 'No token provided' });
   }
 
-  const idToken = authHeader.split('Bearer ')[1];
+  const parts = authHeader.split('Bearer ');
+  if (parts.length !== 2) {
+    return res.status(401).json({ error: 'Unauthorized', message: 'Malformed token' });
+  }
+  const idToken = parts[1].trim();
 
   try {
     if (auth) {
@@ -15,6 +19,9 @@ const verifyToken = async (req, res, next) => {
       req.user = decodedToken;
       next();
     } else {
+      if (process.env.NODE_ENV === 'production') {
+        throw new Error('Firebase Auth is not initialized in production');
+      }
       // Mock auth for local dev without service account
       console.warn('Firebase Auth is not initialized. Bypassing auth check for development.');
       req.user = { uid: 'dev-user-uid', email: 'dev@greenprint.local' };

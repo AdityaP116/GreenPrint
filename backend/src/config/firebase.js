@@ -9,7 +9,7 @@ if (!admin.apps.length) {
   try {
     admin.initializeApp({
       credential: admin.credential.applicationDefault(),
-      projectId: process.env.FIREBASE_PROJECT_ID || 'greenprint-1832f'
+      projectId: process.env.FIREBASE_PROJECT_ID || 'greenprint-b6498'
     });
     console.log('Firebase Admin initialized');
   } catch (error) {

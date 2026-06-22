@@ -17,9 +17,10 @@ const limiter = rateLimit({
 
 // Security and utility middlewares
 app.use(helmet());
-app.use(cors({ origin: process.env.FRONTEND_URL || '*' })); // In production, replace '*' with actual frontend URL
+const allowedOrigins = process.env.FRONTEND_URL ? [process.env.FRONTEND_URL] : ['http://localhost:5173'];
+app.use(cors({ origin: allowedOrigins })); 
 app.use(express.json({ limit: '1mb' })); // Limit request size to prevent DOS
-app.use(morgan('dev'));
+app.use(morgan(process.env.NODE_ENV === 'production' ? 'combined' : 'dev'));
 app.use('/api', limiter); // Apply rate limiter to all /api routes
 
 // Basic health check route
@@ -34,15 +35,9 @@ const userRoutes = require('./routes/userRoutes');
 app.use('/api/assessments', assessmentRoutes);
 app.use('/api/users', userRoutes);
 
-// Serve static frontend files from the dist folder
-app.use(express.static(path.join(__dirname, '../../frontend/dist')));
-
-// Route all non-API requests to the React frontend (for client-side routing)
+// Catch-all for undefined API routes
 app.use((req, res, next) => {
-  if (req.path.startsWith('/api/')) {
-    return res.status(404).json({ error: 'API route not found' });
-  }
-  res.sendFile(path.join(__dirname, '../../frontend/dist/index.html'));
+  res.status(404).json({ error: 'API route not found' });
 });
 
 // Global error handler
